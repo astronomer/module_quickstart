@@ -7,7 +7,8 @@ Quickstarts should:
 - Link to other resources rather than reproduce them
 - Steps should provide concrete actions with ~1 sentence of description 
 - Steps should include code blocks, or images showing what to do in detail, or a direct link to a source that has those
-- All DAGs must have Docstrings with the following structure:
+- All quickstarts should be contained in one file, unless the example requires otherwise
+- All DAGs must have Docstrings with the following structure
 ```
 Before You Start
 
@@ -19,15 +20,32 @@ Next Steps
 
 Extras / Reference
 ```
-- Use the following standard for DAGs, unless the example requires otherwise
+- Use the following standard for DAGs, unless the example **requires** otherwise
 ```python
-from airflow import DAG
 from datetime import datetime
+from airflow import DAG
 
-with DAG("my_example", start_date=datetime(1970, 1, 1), schedule=None):
+with DAG(
+        "my_example",
+        start_date=datetime(1970, 1, 1),
+        schedule=None,
+        doc_md=__doc__
+):
     ...
 ```
 - Examples should always reflect the most recent version of Airflow at time of writing
+
+## Adding from the Bulk Import branch
+```shell
+git checkout main
+git pull 
+git checkout -b my_branch
+git cherry-pick -n d79056547629f287d5f67de2dbefcaff6b8eb484
+git reset head
+git add dags/imported_file_or_folder
+git commit
+git clean -fd
+```
 
 ## Tagging
 PR your addition, merge to `main`, then 
